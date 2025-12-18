@@ -76,8 +76,10 @@ class QuantumCompressionRequest(BaseModel):
 class QuantumDecompressionRequest(BaseModel):
     """Request for quantum vector decompression"""
 
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
     project_id: str
-    compressed_state: List[complex]
+    compressed_state: List[Any]  # Complex numbers represented as dicts or tuples
     original_dimensions: int
 
 

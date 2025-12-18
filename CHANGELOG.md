@@ -142,6 +142,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - MIT License
 - Available on PyPI as `zerodb-mcp`
 
+## [1.0.1] - 2025-01-17
+
+### Added
+- Comprehensive unit tests for table operations (90%+ coverage)
+- Integration tests for complete table workflow
+- Additional test cases for edge cases and error handling
+
+### Improved
+- Table operations documentation with MongoDB-style filter examples
+- Type hints and docstrings for all table methods
+- Error messages for validation failures
+
+### Fixed
+- Table operations parameter validation
+- Batch insert limit enforcement (max 1000 rows)
+
 ## [Unreleased]
 
 ### Planned Features
