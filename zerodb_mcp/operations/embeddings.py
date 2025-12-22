@@ -267,7 +267,7 @@ class EmbeddingOperations:
                     "status": "running",
                     "model_loaded": True
                 },
-                "url": "http://embedding-service.railway.internal:8000",
+                "url": "http://embedding-service.railway.internal:8000",  # Railway internal networking
                 "cost_per_embedding": 0.0
             }
 
