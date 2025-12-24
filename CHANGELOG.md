@@ -158,6 +158,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Table operations parameter validation
 - Batch insert limit enforcement (max 1000 rows)
 
+## [1.1.0] - 2025-12-21
+
+### Added
+- **Embeddings Operations** (6 operations) - FREE embedding generation via Railway HuggingFace
+  - `generate` - Generate embeddings using BAAI BGE models
+  - `embed_and_store` - One-step embedding generation and vector storage
+  - `semantic_search` - Text-based semantic search with automatic embedding
+  - `list_models` - List available embedding models
+  - `health_check` - Check embedding service health
+  - `get_usage` - Get embedding usage statistics
+
+### Fixed
+- Exposed embeddings module in ZeroDBClient (previously implemented but not accessible)
+- Updated client initialization to include EmbeddingOperations
+
+### Documentation
+- Added embeddings operations to client docstring
+- Updated README with embeddings usage examples
+
 ## [Unreleased]
 
 ### Planned Features

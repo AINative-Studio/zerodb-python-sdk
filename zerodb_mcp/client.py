@@ -28,6 +28,7 @@ from .operations.events import EventOperations
 from .operations.projects import ProjectOperations
 from .operations.rlhf import RLHFOperations
 from .operations.admin import AdminOperations
+from .operations.embeddings import EmbeddingOperations
 
 
 class ZeroDBClient:
@@ -82,6 +83,7 @@ class ZeroDBClient:
         projects: Project management operations (7 operations)
         rlhf: RLHF feedback operations (10 operations)
         admin: Admin operations (5 operations)
+        embeddings: Embedding generation operations (6 operations)
     """
 
     def __init__(
@@ -118,6 +120,7 @@ class ZeroDBClient:
         self.projects = ProjectOperations(self)
         self.rlhf = RLHFOperations(self)
         self.admin = AdminOperations(self)
+        self.embeddings = EmbeddingOperations(self)
 
     async def execute(
         self,
