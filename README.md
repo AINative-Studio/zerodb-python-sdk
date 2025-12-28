@@ -33,12 +33,14 @@ pip install -e ".[dev]"
 
 ## Quick Start
 
+### Using ZeroDB Cloud
+
 ```python
 import asyncio
 from zerodb_mcp import ZeroDBClient
 
 async def main():
-    # Initialize client
+    # Initialize client (cloud)
     client = ZeroDBClient(api_key="your_api_key")
 
     # Create a project
@@ -73,6 +75,38 @@ async def main():
 # Run async code
 asyncio.run(main())
 ```
+
+### Using ZeroDB Local
+
+```python
+import asyncio
+from zerodb_mcp import ZeroDBClient
+
+async def main():
+    # Initialize client (local)
+    client = ZeroDBClient(
+        base_url="http://localhost:8000",  # Local ZeroDB instance
+        api_key="local-dev-key"  # Any value works for local
+    )
+
+    # Same API as cloud - use all operations identically
+    project = await client.projects.create(
+        name="Local Development Project"
+    )
+
+    # Develop offline, sync when ready
+    result = await client.vectors.upsert(
+        project_id=project["project_id"],
+        embedding=[0.1, 0.2, 0.3] * 512,
+        document="Test document for local development"
+    )
+
+    await client.close()
+
+asyncio.run(main())
+```
+
+**Learn more:** See [ZeroDB Local Quick Start](/docs/quick-start/ZERODB_LOCAL_QUICKSTART.md) for installation and setup.
 
 ## Authentication
 
