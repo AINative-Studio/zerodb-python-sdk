@@ -614,11 +614,187 @@ flake8 zerodb_mcp/
 
 MIT License - see [LICENSE](LICENSE) file for details.
 
+## ZeroDB Integration: FREE Embeddings + Complete RAG
+
+### 🎉 New: LangChain-Compatible ZeroDBEmbeddings
+
+Save **$100+/month** with FREE HuggingFace embeddings while getting the same quality as OpenAI/Cohere!
+
+```python
+from zerodb_mcp import ZeroDBClient, ZeroDBEmbeddings
+
+# Initialize FREE embeddings
+embeddings = ZeroDBEmbeddings(
+    api_key="your-api-key",
+    model="BAAI/bge-small-en-v1.5"  # 384 dims, very fast
+)
+
+# Embed documents (FREE!)
+docs = ["Machine learning tutorial", "Python guide", "Database optimization"]
+doc_embeddings = embeddings.embed_documents(docs)
+
+print(f"Generated {len(doc_embeddings)} embeddings")
+print(f"Cost: $0.00 (FREE!)")
+
+# Embed query
+query = "How to optimize databases?"
+query_emb = embeddings.embed_query(query)
+
+# Search vectors
+results = await client.vectors.search(
+    project_id=project_id,
+    query_vector=query_emb,
+    limit=5
+)
+```
+
+### Cost Comparison
+
+| Provider | Embeddings Cost | Vector Storage | Total/Month |
+|----------|----------------|----------------|-------------|
+| **ZeroDB** | **$0.00 (FREE)** | **$0-29** | **$0-29** |
+| OpenAI + Pinecone | $100 | $70 | $170 |
+| Cohere + Qdrant | $100 | $50 | $150 |
+
+**Monthly Savings: $120-150** with ZeroDB!
+
+### Available Models
+
+```python
+# Fast & Small (384 dimensions, DEFAULT)
+embeddings = ZeroDBEmbeddings(model="BAAI/bge-small-en-v1.5")
+
+# Fast & Balanced (384 dimensions)
+embeddings = ZeroDBEmbeddings(model="sentence-transformers/all-MiniLM-L6-v2")
+
+# Higher Quality (768 dimensions)
+embeddings = ZeroDBEmbeddings(model="sentence-transformers/all-mpnet-base-v2")
+```
+
+### Complete RAG Example (5 Minutes)
+
+```python
+import asyncio
+from zerodb_mcp import ZeroDBClient, ZeroDBEmbeddings
+
+async def rag_example():
+    # Initialize
+    client = ZeroDBClient(api_key="your-key")
+    embeddings = ZeroDBEmbeddings(api_key="your-key")
+
+    # Create project
+    project = await client.projects.create(
+        project_name="rag_demo",
+        tier="free"  # FREE tier for <100K vectors
+    )
+    project_id = project["project_id"]
+
+    # Knowledge base
+    knowledge = [
+        "Python is a versatile programming language used for web, AI, and data science",
+        "Machine learning is a subset of AI that learns from data",
+        "Neural networks are inspired by biological neurons"
+    ]
+
+    # Generate embeddings (FREE!)
+    knowledge_embeddings = embeddings.embed_documents(knowledge)
+
+    # Store vectors
+    vectors = [
+        {
+            "embedding": emb,
+            "document": doc,
+            "metadata": {"index": i}
+        }
+        for i, (emb, doc) in enumerate(zip(knowledge_embeddings, knowledge))
+    ]
+
+    await client.vectors.batch_upsert(
+        project_id=project_id,
+        vectors=vectors,
+        namespace="knowledge"
+    )
+
+    # Query
+    query = "What programming languages are good for AI?"
+    query_emb = embeddings.embed_query(query)
+
+    results = await client.vectors.search(
+        project_id=project_id,
+        query_vector=query_emb,
+        namespace="knowledge",
+        limit=3
+    )
+
+    print("\nSearch Results:")
+    for r in results["results"]:
+        print(f"- {r['document']}")
+        print(f"  Score: {r['similarity_score']:.2f}\n")
+
+asyncio.run(rag_example())
+```
+
+**Output:**
+```
+Search Results:
+- Python is a versatile programming language used for web, AI, and data science
+  Score: 0.87
+
+- Machine learning is a subset of AI that learns from data
+  Score: 0.72
+
+- Neural networks are inspired by biological neurons
+  Score: 0.65
+```
+
+### 📚 Example Workflows
+
+Ready-to-use examples for common use cases:
+
+1. **[RAG Workflow](../../docs/examples/ZERODB_RAG_WORKFLOW.md)** - Build production RAG with FREE embeddings
+2. **[Agent Memory](../../docs/examples/ZERODB_AGENT_MEMORY.md)** - Persistent conversation history
+3. **[File Processing](../../docs/examples/ZERODB_FILE_PROCESSING.md)** - Upload PDFs, extract text, search
+4. **[NoSQL Patterns](../../docs/examples/ZERODB_NOSQL_METADATA.md)** - Flexible metadata storage
+5. **[Advanced Workflows](../../docs/examples/ZERODB_ADVANCED.md)** - Multi-component systems
+
+### 🚀 Quick Start Guides
+
+- **[Getting Started](../../docs/ZERODB_GETTING_STARTED.md)** - 5-minute quick start
+- **[Troubleshooting](../../docs/ZERODB_TROUBLESHOOTING.md)** - Common issues and solutions
+- **[Migration Guide](../../docs/ZERODB_MIGRATION_GUIDE.md)** - Migrate from Pinecone/Qdrant/Weaviate
+- **[Performance Benchmarks](../../docs/ZERODB_PERFORMANCE_BENCHMARKS.md)** - Detailed performance metrics
+
+### ⚡ Performance
+
+- **Embedding Generation**: ~100 texts/sec (FREE!)
+- **Vector Search**: <50ms for 100K vectors (with HNSW)
+- **NoSQL Queries**: <20ms (with indexes)
+- **File Upload**: ~500 KB/sec
+
+See [Performance Benchmarks](../../docs/ZERODB_PERFORMANCE_BENCHMARKS.md) for detailed metrics.
+
+### 🔗 Integration Testing
+
+Complete integration tests are available in `tests/integration/test_zerodb_integration.py`:
+
+- ✅ RAG Workflow (single + batch)
+- ✅ Agent Memory Workflow
+- ✅ File Processing Pipeline
+- ✅ Multi-Component Workflow
+- ✅ Error Handling and Edge Cases
+
+Run tests:
+```bash
+cd tests/integration
+ZERODB_API_KEY="your-key" pytest test_zerodb_integration.py -v
+```
+
 ## Support
 
 - Documentation: https://docs.ainative.studio/sdk/python
 - Issues: https://github.com/ainative/zerodb-mcp-python/issues
 - Email: support@ainative.studio
+- Discord: https://discord.gg/ainative
 
 ## Changelog
 
