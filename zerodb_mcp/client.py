@@ -29,6 +29,7 @@ from .operations.projects import ProjectOperations
 from .operations.rlhf import RLHFOperations
 from .operations.admin import AdminOperations
 from .operations.embeddings import EmbeddingOperations
+from .operations.memory import MemoryOperations
 
 
 class ZeroDBClient:
@@ -94,11 +95,13 @@ class ZeroDBClient:
         timeout: float = 30.0,
         max_retries: int = 3,
         retry_delay: float = 1.0,
+        extract_entities: bool = False,
     ):
         self.base_url = base_url.rstrip('/')
         self.timeout = timeout
         self.max_retries = max_retries
         self.retry_delay = retry_delay
+        self._extract_entities = extract_entities
 
         # Initialize authentication
         self.auth = AuthHandler(api_key=api_key, jwt_token=jwt_token)
@@ -121,6 +124,7 @@ class ZeroDBClient:
         self.rlhf = RLHFOperations(self)
         self.admin = AdminOperations(self)
         self.embeddings = EmbeddingOperations(self)
+        self.memory = MemoryOperations(self)
 
     async def execute(
         self,
