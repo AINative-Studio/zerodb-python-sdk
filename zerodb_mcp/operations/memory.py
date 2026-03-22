@@ -66,13 +66,15 @@ class MemoryOperations:
             "metadata": meta,
         }
 
-        return await self._client._request("POST", "/api/v1/public/memory/", json=body)
+        response = await self._client._client.post("/api/v1/public/memory/", json=body)
+        if response.status_code >= 400:
+            raise Exception(f"Memory add failed ({response.status_code}): {response.text[:200]}")
+        return response.json()
 
     async def _extract_entities(self, content: str) -> list:
         """Extract entities from memory content using NousCoder (free)."""
         try:
-            response = await self._client._request(
-                "POST",
+            response_raw = await self._client._client.post(
                 "/api/v1/chat/completions",
                 json={
                     "model": "NousResearch/NousCoder-14B",
@@ -90,6 +92,7 @@ class MemoryOperations:
                 },
             )
             import json
+            response = response_raw.json()
             text = response.get("choices", [{}])[0].get("message", {}).get("content", "[]")
             # Parse JSON from response
             text = text.strip()
@@ -129,9 +132,10 @@ class MemoryOperations:
         if tags:
             body["tags"] = tags
 
-        result = await self._client._request(
-            "POST", "/api/v1/public/memory/search", json=body
-        )
+        response = await self._client._client.post("/api/v1/public/memory/search", json=body)
+        if response.status_code >= 400:
+            raise Exception(f"Memory search failed ({response.status_code}): {response.text[:200]}")
+        result = response.json()
 
         memories = result if isinstance(result, list) else result.get("results", result.get("data", []))
 
@@ -160,9 +164,10 @@ class MemoryOperations:
             List of memories ordered by recency
         """
         params = {"limit": limit}
-        result = await self._client._request(
-            "GET", "/api/v1/public/memory/", params=params
-        )
+        response = await self._client._client.get("/api/v1/public/memory/", params=params)
+        if response.status_code >= 400:
+            raise Exception(f"Memory list failed ({response.status_code}): {response.text[:200]}")
+        result = response.json()
         memories = result if isinstance(result, list) else result.get("data", [])
 
         if user_id and isinstance(memories, list):
@@ -183,6 +188,7 @@ class MemoryOperations:
         Returns:
             Deletion confirmation
         """
-        return await self._client._request(
-            "DELETE", f"/api/v1/public/memory/{memory_id}"
-        )
+        response = await self._client._client.delete(f"/api/v1/public/memory/{memory_id}")
+        if response.status_code >= 400:
+            raise Exception(f"Memory delete failed ({response.status_code}): {response.text[:200]}")
+        return response.json()
