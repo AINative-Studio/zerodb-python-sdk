@@ -46,6 +46,9 @@ Documentation = "https://docs.ainative.studio/sdk/python"
 Repository = "https://github.com/ainative/zerodb-mcp-python"
 Issues = "https://github.com/ainative/zerodb-mcp-python/issues"
 
+[project.entry-points.pytest11]
+zerodb_mcp = "zerodb_mcp.testing"
+
 [tool.black]
 line-length = 100
 target-version = ['py39', 'py310', 'py311', 'py312']
