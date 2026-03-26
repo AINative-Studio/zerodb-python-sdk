@@ -31,8 +31,8 @@ async def main():
             session_id=session_id,
             project_id=project_id,
             interaction_type="query",
-            user_input="How do I use quantum compression?",
-            agent_response="Quantum compression uses quantum algorithms to...",
+            user_input="How do I use TurboQuant vector compression?",
+            agent_response="TurboQuant compression uses PolarQuant + QJL to...",
             context={
                 "model": "gpt-4",
                 "tokens_used": 150,

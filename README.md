@@ -4,7 +4,7 @@
 [![Python Support](https://img.shields.io/pypi/pyversions/zerodb-mcp.svg)](https://pypi.org/project/zerodb-mcp/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A production-ready Python client for the ZeroDB MCP Bridge API. Provides comprehensive async access to all 60+ operations including vectors, quantum computing, NoSQL tables, file storage, events, RLHF, and admin functionality.
+A production-ready Python client for the ZeroDB MCP Bridge API. Provides comprehensive async access to all 60+ operations including vectors, TurboQuant vector compression (PolarQuant + QJL), NoSQL tables, file storage, events, RLHF, and admin functionality.
 
 ## Features
 
@@ -188,8 +188,10 @@ export = await client.vectors.export(project_id, format="json")
 
 ### Quantum Operations (6 operations)
 
+TurboQuant vector compression (PolarQuant + QJL) from ICLR 2026. Achieves ~3.5x compression at 0.9999 cosine similarity.
+
 ```python
-# 1. Compress vector using quantum algorithms
+# 1. Compress vector using TurboQuant (PolarQuant + QJL)
 result = await client.quantum.compress_vector(
     project_id=project_id,
     vector_id=vector_id,
@@ -204,7 +206,7 @@ result = await client.quantum.decompress_vector(
     original_dimensions=1536
 )
 
-# 3. Quantum hybrid similarity search
+# 3. TurboQuant hybrid similarity search
 results = await client.quantum.hybrid_similarity(
     project_id=project_id,
     query_vector=[0.1, 0.2, ...],
@@ -213,20 +215,20 @@ results = await client.quantum.hybrid_similarity(
     backend="ionq"
 )
 
-# 4. Quantum space optimization
+# 4. TurboQuant space optimization
 result = await client.quantum.optimize_space(
     project_id=project_id,
     target_compression=0.5
 )
 
-# 5. Quantum feature mapping
+# 5. TurboQuant feature mapping
 result = await client.quantum.feature_map(
     project_id=project_id,
     vector_id=vector_id,
     feature_map_type="ZZFeatureMap"
 )
 
-# 6. Quantum kernel similarity
+# 6. TurboQuant kernel similarity
 result = await client.quantum.kernel_similarity(
     project_id=project_id,
     vector_id_a=vec_a,

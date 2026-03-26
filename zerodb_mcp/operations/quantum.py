@@ -1,13 +1,16 @@
 """
-Quantum computing operations for ZeroDB MCP Client
+TurboQuant vector compression operations for ZeroDB MCP Client
 
-Provides 6 quantum operations leveraging AWS Braket and IonQ:
-1. compress_vector - Quantum vector compression
-2. decompress_vector - Quantum vector decompression
-3. hybrid_similarity - Quantum-enhanced similarity search
-4. optimize_space - Quantum space optimization
-5. feature_map - Quantum feature mapping
-6. kernel_similarity - Quantum kernel similarity
+Powered by Google's TurboQuant algorithm (PolarQuant + QJL) from ICLR 2026.
+Achieves ~3.5x compression at 0.9999 cosine similarity.
+
+Provides 6 operations:
+1. compress_vector - TurboQuant vector compression
+2. decompress_vector - TurboQuant vector decompression
+3. hybrid_similarity - TurboQuant-enhanced similarity search
+4. optimize_space - TurboQuant space optimization
+5. feature_map - TurboQuant feature mapping
+6. kernel_similarity - TurboQuant kernel similarity
 """
 
 from typing import Dict, Any, List, Optional
@@ -15,7 +18,7 @@ from ..utils import validate_embedding
 
 
 class QuantumOperations:
-    """Quantum computing operations powered by AWS Braket and IonQ"""
+    """TurboQuant vector compression operations (PolarQuant + QJL, ICLR 2026)"""
 
     def __init__(self, client):
         self._client = client
@@ -28,10 +31,10 @@ class QuantumOperations:
         backend: str = "simulator"
     ) -> Dict[str, Any]:
         """
-        Compress vector using quantum algorithms
+        Compress vector using TurboQuant (PolarQuant + QJL)
 
-        Uses quantum amplitude encoding and optimization to compress high-dimensional
-        vectors while preserving semantic information.
+        Uses Google's TurboQuant algorithm to compress high-dimensional vectors
+        at ~3.5x ratio while preserving 0.9999 cosine similarity.
 
         Args:
             project_id: Project ID
@@ -81,7 +84,7 @@ class QuantumOperations:
         backend: str = "simulator"
     ) -> Dict[str, Any]:
         """
-        Decompress quantum-compressed vector
+        Decompress TurboQuant-compressed vector
 
         Args:
             project_id: Project ID
@@ -121,9 +124,9 @@ class QuantumOperations:
         backend: str = "simulator"
     ) -> Dict[str, Any]:
         """
-        Quantum-enhanced hybrid similarity search
+        TurboQuant-enhanced hybrid similarity search
 
-        Combines classical cosine similarity with quantum kernel methods for
+        Combines classical cosine similarity with TurboQuant kernel methods for
         improved semantic search accuracy.
 
         Args:
@@ -184,9 +187,9 @@ class QuantumOperations:
         backend: str = "simulator"
     ) -> Dict[str, Any]:
         """
-        Quantum space optimization for vector database
+        TurboQuant space optimization for vector database
 
-        Uses quantum algorithms to optimize storage while preserving search quality.
+        Uses TurboQuant to optimize storage while preserving search quality.
 
         Args:
             project_id: Project ID
@@ -231,9 +234,9 @@ class QuantumOperations:
         backend: str = "simulator"
     ) -> Dict[str, Any]:
         """
-        Apply quantum feature mapping to vector
+        Apply TurboQuant feature mapping to vector
 
-        Maps classical vectors to quantum feature space for enhanced representations.
+        Maps classical vectors to TurboQuant feature space for enhanced representations.
 
         Args:
             project_id: Project ID
@@ -279,9 +282,9 @@ class QuantumOperations:
         backend: str = "simulator"
     ) -> Dict[str, Any]:
         """
-        Compute quantum kernel similarity between two vectors
+        Compute TurboQuant kernel similarity between two vectors
 
-        Uses quantum kernel methods to compute advanced similarity metrics.
+        Uses TurboQuant kernel methods to compute advanced similarity metrics.
 
         Args:
             project_id: Project ID

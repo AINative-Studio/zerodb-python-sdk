@@ -65,7 +65,7 @@ class BatchVectorUpsertRequest(BaseModel):
 # ================================
 
 class QuantumCompressionRequest(BaseModel):
-    """Request for quantum vector compression"""
+    """Request for TurboQuant vector compression (PolarQuant + QJL)"""
 
     project_id: str
     vector_id: str
@@ -74,7 +74,7 @@ class QuantumCompressionRequest(BaseModel):
 
 
 class QuantumDecompressionRequest(BaseModel):
-    """Request for quantum vector decompression"""
+    """Request for TurboQuant vector decompression"""
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
@@ -84,7 +84,7 @@ class QuantumDecompressionRequest(BaseModel):
 
 
 class QuantumSimilarityRequest(BaseModel):
-    """Request for quantum hybrid similarity search"""
+    """Request for TurboQuant hybrid similarity search"""
 
     project_id: str
     query_vector: List[float]

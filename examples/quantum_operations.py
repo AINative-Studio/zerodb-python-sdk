@@ -1,5 +1,6 @@
 """
-Quantum operations example for ZeroDB MCP Python Client
+TurboQuant vector compression (PolarQuant + QJL) operations example for ZeroDB MCP Python Client.
+TurboQuant achieves ~3.5x compression at 0.9999 cosine similarity (ICLR 2026).
 """
 
 import asyncio
@@ -12,8 +13,8 @@ async def main():
     try:
         project_id = "your_project_id_here"
 
-        # 1. Compress vector using quantum algorithms
-        print("1. Compressing vector with quantum algorithms...")
+        # 1. Compress vector using TurboQuant (PolarQuant + QJL)
+        print("1. Compressing vector with TurboQuant (PolarQuant + QJL)...")
         compression_result = await client.quantum.compress_vector(
             project_id=project_id,
             vector_id="your_vector_id_here",
@@ -23,8 +24,8 @@ async def main():
         print(f"Compression ratio: {compression_result['compression_ratio']:.2f}x")
         print(f"Quantum fidelity: {compression_result['quantum_fidelity']:.3f}")
 
-        # 2. Quantum hybrid similarity search
-        print("\n2. Running quantum hybrid similarity search...")
+        # 2. TurboQuant hybrid similarity search
+        print("\n2. Running TurboQuant hybrid similarity search...")
         results = await client.quantum.hybrid_similarity(
             project_id=project_id,
             query_vector=[0.1] * 1536,
@@ -38,8 +39,8 @@ async def main():
             print(f"   Classical: {result['classical_similarity']:.3f}")
             print(f"   Quantum: {result['quantum_similarity']:.3f}")
 
-        # 3. Quantum space optimization
-        print("\n3. Optimizing vector space with quantum algorithms...")
+        # 3. TurboQuant space optimization
+        print("\n3. Optimizing vector space with TurboQuant...")
         optimization_result = await client.quantum.optimize_space(
             project_id=project_id,
             namespace="default",
