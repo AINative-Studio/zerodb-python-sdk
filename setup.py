@@ -17,7 +17,7 @@ setup(
     description="Production-ready Python client for ZeroDB MCP Bridge API",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/ainative/zerodb-mcp-python",
+    url="https://ainative.studio/products/zerodb",
     packages=find_packages(exclude=["tests", "tests.*", "examples"]),
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -53,10 +53,11 @@ setup(
             "sphinx-rtd-theme>=1.2.0",
         ],
     },
-    keywords="zerodb mcp vector database quantum ai machine-learning",
+    keywords="zerodb mcp ainative vector-database semantic-search agent-memory agent-cloud",
     project_urls={
-        "Documentation": "https://docs.ainative.studio/sdk/python",
-        "Source": "https://github.com/ainative/zerodb-mcp-python",
-        "Bug Reports": "https://github.com/ainative/zerodb-mcp-python/issues",
+        "Homepage": "https://ainative.studio/products/zerodb",
+        "Documentation": "https://docs.ainative.studio",
+        "Repository": "https://github.com/AINative-Studio/core",
+        "Bug Tracker": "https://github.com/AINative-Studio/core/issues",
     },
 )
