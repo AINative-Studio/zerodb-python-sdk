@@ -25,7 +25,7 @@ Example:
     ...     )
 """
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 __author__ = "AINative Studio"
 __license__ = "MIT"
 
@@ -46,6 +46,10 @@ from .models import (
     TableCreateRequest,
     FileUploadRequest,
     ProjectCreateRequest,
+)
+from .x402 import (
+    parse_x402_payment_header,
+    parse_x402_payment_header_or_raise,
 )
 
 __all__ = [
@@ -68,4 +72,8 @@ __all__ = [
     "TableCreateRequest",
     "FileUploadRequest",
     "ProjectCreateRequest",
+
+    # x402 payment protocol
+    "parse_x402_payment_header",
+    "parse_x402_payment_header_or_raise",
 ]

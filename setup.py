@@ -11,7 +11,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="zerodb-mcp",
-    version="1.1.0",
+    version="1.2.0",
     author="AINative Studio",
     author_email="support@ainative.studio",
     description="Production-ready Python client for ZeroDB MCP Bridge API",
