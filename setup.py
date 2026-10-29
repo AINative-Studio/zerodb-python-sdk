@@ -11,10 +11,10 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="zerodb-mcp",
-    version="1.2.0",
+    version="1.3.0",
     author="AINative Studio",
     author_email="support@ainative.studio",
-    description="Production-ready Python client for ZeroDB MCP Bridge API",
+    description="Python client for ZeroDB: vector database, agent memory, and x402 agent payments (USDC micropayments) for AI agents and MCP servers",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://ainative.studio/products/zerodb",
@@ -53,7 +53,10 @@ setup(
             "sphinx-rtd-theme>=1.2.0",
         ],
     },
-    keywords="zerodb mcp ainative vector-database semantic-search agent-memory agent-cloud",
+    keywords="zerodb mcp model-context-protocol ainative vector-database semantic-search "
+    "agent-memory agent-cloud ai-agents ai-agent agentic-ai autonomous-agents "
+    "x402 agent-payments agentic-commerce usdc micropayments http-402 "
+    "vibe-coding ai-coding ai-assistant",
     project_urls={
         "Homepage": "https://ainative.studio/products/zerodb",
         "Documentation": "https://docs.ainative.studio",

@@ -4,13 +4,14 @@
 [![Python Support](https://img.shields.io/pypi/pyversions/zerodb-mcp.svg)](https://pypi.org/project/zerodb-mcp/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A production-ready Python client for the ZeroDB MCP Bridge API. Provides comprehensive async access to all 60+ operations including vectors, TurboQuant vector compression (PolarQuant + QJL), NoSQL tables, file storage, events, RLHF, and admin functionality.
+A production-ready Python client for the ZeroDB MCP Bridge API and AI-agent infrastructure. Provides comprehensive async access to all 60+ operations including vectors, TurboQuant vector compression (PolarQuant + QJL), NoSQL tables, file storage, events, RLHF, [x402](https://github.com/coinbase/x402) agent-payment header parsing, and admin functionality.
 
 ## Features
 
 - **Complete API Coverage**: All 60+ MCP Bridge operations
 - **Async/Await Support**: Built on `httpx` for high-performance async operations
 - **Type Safety**: Full Pydantic model validation
+- **x402 Agent Payments**: Parses the `WWW-Authenticate: Payment` header AI agents receive on an HTTP 402 challenge
 - **Automatic Retries**: Intelligent retry logic with exponential backoff
 - **Error Handling**: Comprehensive exception hierarchy
 - **Rate Limiting**: Built-in rate limit handling with retry-after support
@@ -26,8 +27,8 @@ pip install zerodb-mcp
 ### Development Installation
 
 ```bash
-git clone https://github.com/ainative/zerodb-mcp-python.git
-cd zerodb-mcp-python
+git clone https://github.com/AINative-Studio/zerodb-python-sdk.git
+cd zerodb-python-sdk
 pip install -e ".[dev]"
 ```
 
@@ -469,6 +470,28 @@ health = await client.admin.system_health()
 result = await client.admin.optimize_database(vacuum=True, reindex=True)
 ```
 
+## x402 Agent Payments
+
+[x402](https://github.com/coinbase/x402) is the HTTP 402 "Payment Required" micropayment standard — an AI agent hits a paid endpoint, gets back a `402` with a `WWW-Authenticate: Payment ...` header describing what it costs, pays in USDC, and retries. This SDK includes a parser for that header so your agent doesn't need to hand-roll the parsing.
+
+```python
+from zerodb_mcp import parse_x402_payment_header, parse_x402_payment_header_or_raise
+
+# Given a real 402 response from an x402-protected endpoint:
+header = response.headers.get("www-authenticate")
+# 'Payment scheme="exact", network="base", asset="USDC", amount="2000", pay_to="0xabc..."'
+
+requirements = parse_x402_payment_header(header)
+# {'scheme': 'exact', 'network': 'base', 'asset': 'USDC', 'amount': '2000', 'pay_to': '0xabc...'}
+# Returns None if the header isn't an x402 Payment challenge (e.g. a plain
+# 401 on the same route) -- callers should treat None as "not x402", not raise.
+
+# Or raise immediately if you expect a valid challenge and want to fail loudly:
+requirements = parse_x402_payment_header_or_raise(header)
+```
+
+Pair this with your own wallet/payment logic to pay the `amount` of `asset` to `pay_to` on `network`, then retry the original request with proof of payment.
+
 ## Error Handling
 
 ```python
@@ -794,11 +817,15 @@ ZERODB_API_KEY="your-key" pytest test_zerodb_integration.py -v
 ## Support
 
 - Documentation: https://docs.ainative.studio/sdk/python
-- Issues: https://github.com/ainative/zerodb-mcp-python/issues
+- Issues: https://github.com/AINative-Studio/zerodb-python-sdk/issues
 - Email: support@ainative.studio
 - Discord: https://discord.gg/ainative
 
 ## Changelog
+
+### 1.2.0
+
+- Added `parse_x402_payment_header` / `parse_x402_payment_header_or_raise` — parses the `WWW-Authenticate: Payment` header an AI agent receives on an x402 HTTP 402 challenge
 
 ### 1.0.0 (2025-01-14)
 
