@@ -645,6 +645,12 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 Save **$100+/month** with FREE HuggingFace embeddings while getting the same quality as OpenAI/Cohere!
 
+Requires the `langchain` extra:
+
+```bash
+pip install zerodb-mcp[langchain]
+```
+
 ```python
 from zerodb_mcp import ZeroDBClient, ZeroDBEmbeddings
 
